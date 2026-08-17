@@ -1,0 +1,43 @@
+.section {
+  padding: 64px 0;
+  border-top: 1px solid var(--border);
+}
+
+.heading {
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  margin: 0 0 32px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 72ch;
+}
+
+.item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  background: var(--surface);
+}
+
+.item summary {
+  cursor: pointer;
+}
+
+.question {
+  margin: 0;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  display: inline;
+}
+
+.item p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
