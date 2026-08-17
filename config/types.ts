@@ -96,11 +96,25 @@ export interface SiteConfig {
   business?: BusinessFacts;
 
   hero: {
+    eyebrow: LocalizedText;
+    /** Initial state, visible before the scroll-driven wall sequence starts. */
     headline: LocalizedText;
     subheadline: LocalizedText;
     ctaLabel: LocalizedText;
+    /** Three short technical marks shown during the 15–30% marking phase, paired with 01/02/03. */
+    markLabels: [LocalizedText, LocalizedText, LocalizedText];
+    /** Revealed once the wall opens (92–100%). */
+    finalHeadline: LocalizedText;
+    finalSubheadline: LocalizedText;
+    finalCtaLabel: LocalizedText;
+    /** Desktop and mobile need different crops, not a scaled-down desktop image. */
+    assets: {
+      wallTexture: { desktop: string; mobile: string };
+      finalInterior: { desktop: string; mobile: string };
+    };
   };
 
+  /** Rendered as the "application scenarios" grid (Wand entfernen, Durchgang schaffen, …). */
   services: ServiceItem[];
 
   process?: ProcessStep[];
@@ -109,6 +123,52 @@ export interface SiteConfig {
     heading: LocalizedText;
     body: LocalizedText;
   };
+
+  /** 02 — Manifesto. Two-line editorial statement plus a short explanatory body. */
+  statement?: {
+    headingLines: [LocalizedText, LocalizedText];
+    body: LocalizedText;
+  };
+
+  /**
+   * 03 — Sicherheit / Präzision. Three trust blocks, each its own hairline-
+   * divided item, not a card grid. Bodies must stay legally cautious — never
+   * promise load-bearing-wall work without a real structural check, never
+   * invent certificates, years of experience, or project counts.
+   */
+  statikSafety?: {
+    heading: LocalizedText;
+    items: [
+      { title: LocalizedText; body: LocalizedText },
+      { title: LocalizedText; body: LocalizedText },
+      { title: LocalizedText; body: LocalizedText },
+    ];
+  };
+
+  /** 06 — sticky video section (Video №7, wall-breakthrough-process). */
+  video?: {
+    heading: LocalizedText;
+    assets: { mp4: string; webm: string; poster: string };
+  };
+
+  /** 07 — Ergebnis, the SectionStack cover that rises over the sticky video. */
+  ergebnis?: {
+    headingLines: [LocalizedText, LocalizedText, LocalizedText];
+    body: LocalizedText;
+    image: { desktop: string; mobile: string };
+  };
+
+  /**
+   * 08 — asymmetric editorial gallery. Stock photography, not real finished
+   * projects — `label` must stay generic (MATERIAL/PROZESS/…), never an
+   * invented client or address. `role` drives the 12-col layout: one wide,
+   * one tall, two compact.
+   */
+  gallery?: {
+    label: LocalizedText;
+    role: "wide" | "tall" | "compact";
+    image: string;
+  }[];
 
   /** Real client quotes only — see Testimonial. Omit/leave empty if none exist yet. */
   testimonials?: Testimonial[];

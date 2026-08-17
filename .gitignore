@@ -40,3 +40,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Raw Pexels source photos/videos kept locally for re-processing — only the
+# derived, optimized assets actually referenced in code (webp/mp4/webm under
+# public/images/wanddurchbruch/) are versioned. ~130MB of unused raw source
+# material stays out of git history.
+public/images/wanddurchbruch/pexels-*.jpg
+public/images/wanddurchbruch/*.mp4
+!public/images/wanddurchbruch/wall-breakthrough-process.mp4

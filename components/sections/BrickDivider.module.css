@@ -1,0 +1,46 @@
+.wrap {
+  position: relative;
+  height: 100svh;
+  max-height: 640px;
+  overflow: hidden;
+  background: var(--surface);
+  border-block: 1px solid var(--border);
+}
+
+.grid {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.brick {
+  aspect-ratio: 64 / 32;
+  background-image: url("/images/wanddurchbruch/brick.svg");
+  background-size: cover;
+  will-change: transform, opacity;
+}
+
+.brick:nth-child(3n) {
+  filter: brightness(0.92);
+}
+
+.brick:nth-child(5n) {
+  filter: brightness(1.07) saturate(0.95);
+}
+
+@media (max-width: 767.98px) {
+  .wrap {
+    max-height: 420px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* Keep ~24 bricks visible on mobile (6 cols × 4 rows) instead of 40. */
+  .brick:nth-child(n + 25) {
+    display: none;
+  }
+}

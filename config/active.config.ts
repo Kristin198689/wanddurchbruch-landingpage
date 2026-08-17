@@ -4,6 +4,6 @@
 //   2. Fill in the new file
 //   3. Change the import below to point at it
 
-import config from "./clients/demo.config";
+import config from "./clients/wanddurchbruch.config";
 
 export default config;

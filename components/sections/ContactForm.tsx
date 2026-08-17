@@ -31,8 +31,12 @@ export default function ContactForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.get("name"),
-          email: data.get("email"),
+          contact: data.get("contact"),
+          city: data.get("city"),
+          wallType: data.get("wallType"),
           message: data.get("message"),
+          timeframe: data.get("timeframe"),
+          consent: data.get("consent") === "on",
         }),
       });
 
@@ -57,12 +61,31 @@ export default function ContactForm({
             <input type="text" name="name" required maxLength={200} />
           </label>
           <label>
-            {dict.contact.email}
-            <input type="email" name="email" required maxLength={200} />
+            {dict.contact.phone}
+            <input type="text" name="contact" required maxLength={200} />
           </label>
+          <div className={styles.row}>
+            <label>
+              {dict.contact.city}
+              <input type="text" name="city" maxLength={200} />
+            </label>
+            <label>
+              {dict.contact.wallType}
+              <input type="text" name="wallType" maxLength={200} />
+            </label>
+          </div>
           <label>
             {dict.contact.message}
             <textarea name="message" rows={5} required maxLength={2000} />
+          </label>
+          <label>
+            {dict.contact.timeframe}
+            <input type="text" name="timeframe" maxLength={200} />
+          </label>
+
+          <label className={styles.consent}>
+            <input type="checkbox" name="consent" required />
+            <span>{dict.contact.consent}</span>
           </label>
 
           <button type="submit" disabled={status === "sending"}>

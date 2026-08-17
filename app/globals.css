@@ -1,34 +1,51 @@
 :root {
-  --bg: #fafaf9;
-  --fg: #111114;
-  --muted: #6b6b70;
-  --surface: #ffffff;
-  --border: rgba(17, 17, 20, 0.1);
-  --accent: #111114;
-  --accent-contrast: #f5f5f4;
+  /* DURCH/BRUCH — approved palette. Cobalt is punctuation only: 3-5% of the
+     interface (cut-line, slash, index numbers, CTA edge, hover/focus). */
+  --ink: #0b0d10;
+  --paper: #ecebe6;
+  --surface: #f7f6f1;
+  --concrete: #777c82;
+  --line: #cdd0d2;
+  --accent: #3157ff;
+  --accent-contrast: #f7f6f1;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --muted: var(--concrete);
+  --border: var(--line);
 
-  --radius: 14px;
-  --container: 1140px;
+  --font-display: var(--font-unbounded), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-golos), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), "SFMono-Regular", Consolas, monospace;
+  --font-sans: var(--font-body);
+
+  --radius: 0px;
+  --container: 1240px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root[data-theme="dark"] {
-  --bg: #0c0c0d;
-  --fg: #f2f2f2;
-  --muted: #9a9a9f;
-  --surface: #161618;
-  --border: rgba(245, 245, 245, 0.1);
+  --bg: #0e0f11;
+  --fg: var(--paper);
+  --muted: #9aa0a5;
+  --surface: #17181b;
+  --border: rgba(236, 235, 230, 0.14);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0c0c0d;
-    --fg: #f2f2f2;
-    --muted: #9a9a9f;
-    --surface: #161618;
-    --border: rgba(245, 245, 245, 0.1);
+    --bg: #0e0f11;
+    --fg: var(--paper);
+    --muted: #9aa0a5;
+    --surface: #17181b;
+    --border: rgba(236, 235, 230, 0.14);
   }
+}
+
+:root[lang="ar"] {
+  --font-display: var(--font-cairo), var(--font-body);
+  --font-body: var(--font-cairo), "Segoe UI", sans-serif;
+  --font-mono: var(--font-noto-kufi), var(--font-mono);
 }
 
 * {
@@ -44,7 +61,7 @@ body {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -55,10 +72,17 @@ a {
 
 h1,
 h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+h1,
+h2,
 h3,
 p {
   overflow-wrap: break-word;
-  word-break: break-word;
+  word-break: normal;
   hyphens: auto;
 }
 
@@ -70,16 +94,47 @@ svg {
 
 .container {
   max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 16px;
+  margin-inline: auto;
+  padding-inline: 20px;
 }
 
 @media (min-width: 480px) {
   .container {
-    padding: 0 24px;
+    padding-inline: 32px;
   }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--accent);
 }
 
 button {
   font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -41,10 +41,9 @@ export default function MobileMenu({
     >
       <nav className={styles.nav} aria-label="Mobile" onClick={() => setOpen(false)}>
         <a href="#services">{dict.nav.services}</a>
+        {config.statikSafety && <a href="#statik">{dict.nav.statik}</a>}
         {config.process && <a href="#process">{dict.nav.process}</a>}
-        <a href="#about">{dict.nav.about}</a>
-        {config.testimonials && <a href="#testimonials">{dict.nav.testimonials}</a>}
-        {config.pricing && <a href="#pricing">{dict.nav.pricing}</a>}
+        {config.gallery && <a href="#gallery">{dict.nav.gallery}</a>}
         {config.faq && <a href="#faq">{dict.nav.faq}</a>}
         <a href="#contact">{dict.nav.contact}</a>
       </nav>
@@ -68,7 +67,7 @@ export default function MobileMenu({
         className={styles.trigger}
         aria-expanded={open}
         aria-controls="mobile-menu-panel"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? dict.nav.menuClose : dict.nav.menuOpen}
         onClick={() => setOpen((v) => !v)}
       >
         <span className={`${styles.bar} ${open ? styles.barOpenTop : ""}`} />

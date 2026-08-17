@@ -20,15 +20,14 @@ export default function Header({
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href={`/${locale}`} className={styles.brand}>
-          {config.brand.logoText ?? config.brand.name}
+          DURCH<span className={styles.brandSlash}>/</span>BRUCH
         </Link>
 
         <nav className={styles.nav} aria-label="Main">
           <a href="#services">{dict.nav.services}</a>
+          {config.statikSafety && <a href="#statik">{dict.nav.statik}</a>}
           {config.process && <a href="#process">{dict.nav.process}</a>}
-          <a href="#about">{dict.nav.about}</a>
-          {config.testimonials && <a href="#testimonials">{dict.nav.testimonials}</a>}
-          {config.pricing && <a href="#pricing">{dict.nav.pricing}</a>}
+          {config.gallery && <a href="#gallery">{dict.nav.gallery}</a>}
           {config.faq && <a href="#faq">{dict.nav.faq}</a>}
           <a href="#contact">{dict.nav.contact}</a>
         </nav>

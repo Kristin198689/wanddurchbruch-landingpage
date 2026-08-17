@@ -1,5 +1,6 @@
 import type { Locale, SiteConfig } from "@/config/types";
 import type { Dictionary } from "@/config/i18n";
+import Reveal from "@/components/ui/Reveal";
 import styles from "./Process.module.css";
 
 export default function Process({
@@ -16,15 +17,21 @@ export default function Process({
   return (
     <section id="process" className={styles.section}>
       <div className="container">
-        <h2 className={styles.heading}>{dict.nav.process}</h2>
+        <Reveal>
+          <h2 className={styles.heading}>{dict.nav.process}</h2>
+        </Reveal>
         <ol className={styles.list}>
           {config.process.map((step, index) => (
             <li key={step.title[locale]} className={styles.step}>
-              <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
-              <div>
-                <h3 className={styles.stepTitle}>{step.title[locale]}</h3>
-                <p className={styles.stepDescription}>{step.description[locale]}</p>
-              </div>
+              <Reveal delay={index * 70} className={styles.stepInner}>
+                <span className={`${styles.number} index`}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className={styles.stepTitle}>{step.title[locale]}</h3>
+                  <p className={styles.stepDescription}>{step.description[locale]}</p>
+                </div>
+              </Reveal>
             </li>
           ))}
         </ol>

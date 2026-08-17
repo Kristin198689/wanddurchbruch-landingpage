@@ -13,6 +13,10 @@ export interface Dictionary {
     pricing: string;
     faq: string;
     contact: string;
+    statik: string;
+    gallery: string;
+    menuOpen: string;
+    menuClose: string;
   };
   theme: {
     toggle: string;
@@ -20,7 +24,12 @@ export interface Dictionary {
   contact: {
     name: string;
     email: string;
+    phone: string;
+    city: string;
+    wallType: string;
     message: string;
+    timeframe: string;
+    consent: string;
     submit: string;
     sending: string;
     success: string;

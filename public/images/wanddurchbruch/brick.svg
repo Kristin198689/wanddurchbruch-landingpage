@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 32">
+  <title>Brick unit — muted concrete/ink tone, matches the approved palette</title>
+  <rect width="64" height="32" fill="#3a3d42" />
+  <rect x="0" y="0" width="64" height="32" fill="#454850" />
+  <rect x="0" y="0" width="64" height="1.5" fill="#cdd0d2" opacity="0.3" />
+  <rect x="0" y="30.5" width="64" height="1.5" fill="#0b0d10" opacity="0.35" />
+</svg>

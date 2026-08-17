@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Unbounded, Golos_Text, IBM_Plex_Mono, Cairo, Noto_Kufi_Arabic } from "next/font/google";
 import activeConfig from "@/config/active.config";
 import { getDictionary } from "@/config/i18n";
 import type { Locale } from "@/config/types";
@@ -12,8 +12,33 @@ import Footer from "@/components/Footer";
 import SchemaOrg from "@/components/SchemaOrg/SchemaOrg";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Confirmed via live Google Fonts CSS API response — cyrillic covers uk, latin covers de umlauts.
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
+  subsets: ["latin", "cyrillic"],
+  weight: ["700", "900"],
+});
+const golos = Golos_Text({
+  variable: "--font-golos",
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
+});
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500"],
+});
+// Arabic gets its own pair — never the Latin display font forced to fake-render Arabic.
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic"],
+  weight: ["600", "700", "800"],
+});
+const notoKufi = Noto_Kufi_Arabic({
+  variable: "--font-noto-kufi",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600"],
+});
 
 const THEME_INIT_SCRIPT = `
 (function () {
@@ -82,7 +107,7 @@ export default async function LangLayout({
       lang={lang}
       dir={dir}
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${unbounded.variable} ${golos.variable} ${plexMono.variable} ${cairo.variable} ${notoKufi.variable}`}
       style={
         {
           "--accent": activeConfig.theme.accent,

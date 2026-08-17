@@ -1,0 +1,317 @@
+.scene {
+  --op-left: 16%;
+  --op-top: 40%;
+  --op-width: 68%;
+  --op-height: 48%;
+
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+  isolation: isolate;
+}
+
+@media (min-width: 768px) {
+  .scene {
+    --op-left: 54%;
+    --op-top: 18%;
+    --op-width: 32%;
+    --op-height: 66%;
+  }
+}
+
+/* ---------- photographic layers ---------- */
+
+.interior,
+.wallBase,
+.fragment {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.interior {
+  z-index: 0;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.wallLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+.wallBase {
+  will-change: opacity;
+}
+
+.fragment {
+  will-change: transform, opacity;
+}
+
+.frag0 {
+  clip-path: inset(40% 50% 36% 16%);
+}
+.frag1 {
+  clip-path: inset(40% 16% 36% 50%);
+}
+.frag2 {
+  display: none;
+}
+.frag3 {
+  clip-path: inset(64% 50% 12% 16%);
+}
+.frag4 {
+  clip-path: inset(64% 16% 12% 50%);
+}
+.frag5,
+.frag6,
+.frag7,
+.frag8 {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .frag0 {
+    clip-path: inset(18% 35.33% 60% 54%);
+  }
+  .frag1 {
+    clip-path: inset(18% 24.67% 60% 64.67%);
+    display: block;
+  }
+  .frag2 {
+    clip-path: inset(18% 14% 60% 75.33%);
+    display: block;
+  }
+  .frag3 {
+    clip-path: inset(40% 35.33% 38% 54%);
+  }
+  .frag4 {
+    clip-path: inset(40% 24.67% 38% 64.67%);
+    display: block;
+  }
+  .frag5 {
+    clip-path: inset(40% 14% 38% 75.33%);
+    display: block;
+  }
+  .frag6 {
+    clip-path: inset(62% 35.33% 16% 54%);
+    display: block;
+  }
+  .frag7 {
+    clip-path: inset(62% 24.67% 16% 64.67%);
+    display: block;
+  }
+  .frag8 {
+    clip-path: inset(62% 14% 16% 75.33%);
+    display: block;
+  }
+}
+
+/* soft depth shadow behind the opening, appears during separation (50–68%) */
+.depth {
+  position: absolute;
+  inset-block-start: var(--op-top);
+  inset-inline-start: var(--op-left);
+  inline-size: var(--op-width);
+  block-size: var(--op-height);
+  z-index: 9;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 70%);
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* ---------- dust canvas ---------- */
+
+.dustCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- cut-line / marking ---------- */
+
+.cutLine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 16;
+  pointer-events: none;
+}
+
+[dir="rtl"] .cutLine {
+  transform: scaleX(-1);
+}
+
+.outlineRect {
+  fill: none;
+  stroke: var(--line);
+  stroke-opacity: 0.5;
+  stroke-width: 1.25;
+  stroke-dasharray: 6 4;
+  vector-effect: non-scaling-stroke;
+  x: var(--op-left);
+  y: var(--op-top);
+  width: var(--op-width);
+  height: var(--op-height);
+  opacity: 0;
+}
+
+.cutSeg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 2px rgba(49, 87, 255, 0.35));
+}
+
+/* ---------- marks: 01/02/03 technical labels ---------- */
+
+.marks {
+  position: absolute;
+  inset-block-start: calc(var(--op-top) - 34px);
+  inset-inline-start: var(--op-left);
+  inline-size: var(--op-width);
+  z-index: 17;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.mark {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.markIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.markLabel {
+  color: var(--paper);
+}
+
+/* ---------- content ---------- */
+
+.contentWrap {
+  position: relative;
+  z-index: 20;
+  height: 100%;
+  min-height: 100svh;
+}
+
+.content {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  width: min(90%, 640px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding-inline: inherit;
+  padding-block-start: 88px;
+  color: var(--paper);
+}
+
+.finalContent {
+  opacity: 0;
+  color: var(--ink);
+}
+
+.eyebrow {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(2.75rem, 7.4vw, 6.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.subheadline {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  max-width: 34ch;
+  margin: 0;
+  opacity: 0.82;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 15px 30px;
+  border: 1px solid rgba(236, 235, 230, 0.55);
+  background: transparent;
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+  transition: border-color 0.25s var(--ease-out-expo), color 0.25s var(--ease-out-expo),
+    transform 0.25s var(--ease-out-expo);
+}
+
+.cta:hover,
+.cta:focus-visible {
+  border-color: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.finalContent .cta {
+  border-color: rgba(11, 13, 16, 0.4);
+  color: var(--ink);
+}
+
+.finalContent .cta:hover,
+.finalContent .cta:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta {
+    transition: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    width: 100%;
+    justify-content: flex-start;
+    padding-block-start: 96px;
+  }
+
+  .headline {
+    font-size: clamp(2.5rem, 11vw, 3.6rem);
+  }
+
+  .marks {
+    inset-block-start: calc(var(--op-top) - 28px);
+  }
+}

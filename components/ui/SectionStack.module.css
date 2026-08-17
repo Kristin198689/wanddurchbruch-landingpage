@@ -1,0 +1,61 @@
+.stack {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.base,
+.cover {
+  position: relative;
+  width: 100%;
+}
+
+.base {
+  z-index: 1;
+}
+
+.cover {
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .base {
+    position: sticky;
+    top: var(--section-stack-top, 0px);
+  }
+
+  .cover {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobileEnabled .base {
+    position: sticky;
+    top: var(--section-stack-top, 0px);
+  }
+
+  .mobileEnabled .cover {
+    position: relative;
+    z-index: 2;
+  }
+
+  .mobileEnabled .cover > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base,
+  .mobileEnabled .base {
+    position: relative;
+    top: auto;
+  }
+}

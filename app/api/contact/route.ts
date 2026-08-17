@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { isRateLimited } from "@/lib/rateLimit";
 import { sendTelegramMessage } from "@/lib/telegram";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_LEN = 2000;
 
 function escapeHtml(input: string): string {
@@ -10,6 +9,12 @@ function escapeHtml(input: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+function optionalString(value: unknown): string {
+  return typeof value === "string" && value.trim() && value.length <= MAX_LEN
+    ? escapeHtml(value.trim())
+    : "";
 }
 
 export async function POST(req: NextRequest) {
@@ -30,30 +35,40 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid_body" }, { status: 400 });
   }
 
-  const { name, email, message } = body as Record<string, unknown>;
+  const { name, contact, message, city, wallType, timeframe, consent } = body as Record<
+    string,
+    unknown
+  >;
 
   if (
     typeof name !== "string" ||
-    typeof email !== "string" ||
+    typeof contact !== "string" ||
     typeof message !== "string" ||
     !name.trim() ||
-    !EMAIL_RE.test(email) ||
+    !contact.trim() ||
     !message.trim() ||
+    consent !== true ||
     name.length > MAX_LEN ||
-    email.length > MAX_LEN ||
+    contact.length > MAX_LEN ||
     message.length > MAX_LEN
   ) {
     return NextResponse.json({ error: "invalid_fields" }, { status: 400 });
   }
 
-  const text = [
-    "<b>New lead</b>",
+  const lines = [
+    "<b>New lead — Wanddurchbruch</b>",
     `Name: ${escapeHtml(name.trim())}`,
-    `Email: ${escapeHtml(email.trim())}`,
-    `Message: ${escapeHtml(message.trim())}`,
-  ].join("\n");
+    `Contact: ${escapeHtml(contact.trim())}`,
+  ];
+  const cityVal = optionalString(city);
+  const wallTypeVal = optionalString(wallType);
+  const timeframeVal = optionalString(timeframe);
+  if (cityVal) lines.push(`City: ${cityVal}`);
+  if (wallTypeVal) lines.push(`Wall type: ${wallTypeVal}`);
+  if (timeframeVal) lines.push(`Timeframe: ${timeframeVal}`);
+  lines.push(`Message: ${escapeHtml(message.trim())}`);
 
-  const sent = await sendTelegramMessage(text);
+  const sent = await sendTelegramMessage(lines.join("\n"));
 
   if (!sent) {
     return NextResponse.json({ error: "delivery_failed" }, { status: 502 });
